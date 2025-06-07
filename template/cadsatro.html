@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .register-container {
+      background-color: #111;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(180, 83, 95, 0.4);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    .register-container h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #b4535f;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      background-color: #222;
+      color: #fff;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #b4535f;
+    }
+
+    .register-button {
+      width: 100%;
+      padding: 12px;
+      background-color: #b4535f;
+      border: none;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .register-button:hover {
+      background-color: #993a4d;
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .footer-text a {
+      color: #b4535f;
+      text-decoration: none;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>Criar Conta</h2>
+    <form action="http://127.0.0.1:8001/cadastro" method="post">
+      <div class="form-group">
+        <label for="fullname">Nome completo</label>
+        <input type="text" id="fullname" name="fullname" required />
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="form-group">
+        <label for="user">Usuário</label>
+        <input type="text" id="user" name="user" required />
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" name="password" required />
+      </div>
+      <button type="submit" class="register-button">Cadastrar</button>
+    </form>
+    <div class="footer-text">
+      Já tem uma conta? <a href="login.html">Entrar</a>
+    </div>
+  </div>
+</body>
+</html>
