@@ -1,0 +1,207 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #fff;
+}
+
+header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 40px;
+    background-color: #111;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 32px;
+    color: #B23A48;
+    font-weight: bold;
+}
+
+nav a {
+    margin: 0 15px;
+    color: #fff;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #B23A48;
+}
+
+.perfil {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.perfil input {
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    background-color: #333;
+    color: #fff;
+}
+
+.banner {
+    height: 90vh;
+    background-image: url(img/robo.png);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin-top: 70px;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, #000, transparent 60%);
+}
+
+.banner-content {
+    position: absolute;
+    bottom: 60px;
+    left: 50px;
+    max-width: 40%;
+}
+
+.banner-content h1 {
+    font-size: 48px;
+    margin: 0 0 10px;
+}
+
+.banner-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.banner-buttons button {
+    background-color: #B23A48;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.banner-buttons button:hover {
+    background-color: #911c33;
+}
+
+main {
+    padding: 20px 50px;
+    margin-top: 30px;
+}
+
+.lista h2 {
+    margin-bottom: 10px;
+    color: #B23A48;
+}
+
+.carrossel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+
+.carrossel {
+    display: flex;
+    gap: 15px;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding: 10px 0;
+}
+
+.carrossel img {
+    width: 180px;
+    height: 270px;
+    border-radius: 8px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.carrossel img:hover {
+    transform: scale(1.05);
+}
+
+.seta {
+    position: relative;
+    background-color: #b23a485d;
+    border-radius: 20%;
+    border: none;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+    height: 100%;
+    opacity: 0.8;
+    transition: 0.3s ease;
+}
+
+.seta:hover {
+    opacity: 1;
+}
+
+.seta.esquerda {
+    margin-right: 5px;
+}
+
+.seta.direita {
+    margin-left: 5px;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 60vw;
+    max-width: 500px;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.95);
+    border-radius: 12px;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px #B23A48;
+    z-index: 1000;
+    padding: 20px;
+    text-align: center;
+}
+
+.popup img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.fechar {
+    position: absolute;
+    top: 8px;
+    right: 15px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+
+.user{
+    border: 1px solid #B23A48;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+}
+
+.user img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}

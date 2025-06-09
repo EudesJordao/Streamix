@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Streamix</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <div class="logo">S</div>
+        <nav>
+            <a href="#">Filmes</a>
+            <a href="#">Séries</a>
+            <a href="#">Suporte</a>
+            <a href="#">Inscrições</a>
+        </nav>
+        <div class="perfil">
+            <input type="text" placeholder="Buscar...">
+            <span>🔔</span>
+            <span class="user"><img src="img/images-removebg-preview.png" alt=""></span>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="overlay"></div>
+        <div class="banner-content">
+            <h1>Robô Selvagem</h1>
+            <p>O robô ROZUM um grande robô com uma alma bondosa e curiosa que foge para encontrar seu criador.</p>
+            <div class="banner-buttons">
+                <button class="assistir">▶ Assistir</button>
+                <button class="adicionar">＋ Adicionar à lista</button>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section class="lista">
+            <h2>Minha lista</h2>
+            <div class="carrossel-wrapper">
+                <button class="seta esquerda">←</button>
+                <div class="carrossel" id="carrossel">
+                    <img src="img/099ccd6d0034851bff475b42b54b8f8b75d52241.png" alt="Avengers Endgame">
+                    <img src="img/271e304ac101213306de658118d32f25c0d3bf53.png" alt="Gladiador">
+                    <img src="img/4dbdceb1cfe73f18c97d99cc5e2a1ea58758bbf9.png" alt="Gladiador">
+                    <img src="img/80be7565c459589cf493de6b7b214a76983fa730.png" alt="Gladiador">
+                    <img src="img/94ba127c7756ba402b1a23f512d52478db2ee5ab.png" alt="Gladiador">
+                    <img src="img/98d03d33e2396f250d32ed145bae017fd6f22e71.png" alt="Gladiador">
+                    <img src="img/a75b7e4dbb12f06ccae749621f0a924b031d276f.png" alt="Gladiador">
+                    <img src="img/a849baed84f7e34952c0d01cb79fafcb89958217.png" alt="Gladiador">
+                    <img src="img/eb2f5c938536b551d059a15d6c7c13936267530d.png" alt="Gladiador">
+                    <img src="img/f3094f38d23d85c5d214586a7330f7bb4dca16c9.png" alt="Gladiador">
+                    <img src="img/f3c9f45cc802ab1d541c681ec93756391ba61d10.png" alt="Gladiador">
+                </div>
+                <button class="seta direita">→</button>
+            </div>
+        </section>
+        <!-- Popup flutuante -->
+        <div id="popup" class="popup">
+            <span class="fechar">×</span>
+            <img id="popup-img" src="" alt="Imagem ampliada">
+        </div>
+
+    </main>
+</body>
+<script>
+    const carrossel = document.getElementById('carrossel');
+    const setaEsquerda = document.querySelector('.seta.esquerda');
+    const setaDireita = document.querySelector('.seta.direita');
+
+    const scrollAmount = 4 * 195;
+
+    setaEsquerda.addEventListener('click', () => {
+        carrossel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+
+    setaDireita.addEventListener('click', () => {
+        carrossel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+
+    // Imagem popup
+    const popup = document.getElementById('popup');
+    const popupImg = document.getElementById('popup-img');
+    const fecharBtn = document.querySelector('.fechar');
+
+    document.querySelectorAll('.carrossel img').forEach(img => {
+        img.addEventListener('click', () => {
+            popupImg.src = img.src;
+            popup.style.display = 'block';
+        });
+    });
+
+    fecharBtn.addEventListener('click', () => {
+        popup.style.display = 'none';
+        popupImg.src = '';
+    });
+
+    // Fechar ao clicar fora da imagem
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) {
+            popup.style.display = 'none';
+            popupImg.src = '';
+        }
+    });
+</script>
+
+</html>
