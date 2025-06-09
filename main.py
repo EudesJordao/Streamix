@@ -1,5 +1,8 @@
-from fastapi import FastAPI, Form
+from fastapi import FastAPI, Form, Depends
+from sqlalchemy.orm import Session
 import re
+from database import Base, engine, SessionLocal
+from model import Usuario
 
 app = FastAPI()
 
@@ -41,7 +44,10 @@ def validar_email(email: str):
     if not re.search(r'^[\w\.-]+@[\w\.-]+\.\w+$', email):
         ListErrorEmail.append("O email não é valido")
 
-#a
+Base.metadata.create_all(bind=engine)
+
+
+
 @app.post("/cadastro")
 def cadastro(fullname: str = Form(...), email: str = Form(...), user: str = Form(...), password: str = Form(...)):
     validar_senha(password)
@@ -60,5 +66,38 @@ def cadastro(fullname: str = Form(...), email: str = Form(...), user: str = Form
         mensage = {f"A senha esta errada: {listErrorSenha.copy()}"}
         listErrorSenha.clear()
         return mensage
+    else:
+        db = SessionLocal()
         
+        novo_usuario = Usuario(
+            email = email,
+            password_hash = password,
+            fullname = fullname,
+            user = user
+        )
 
+        email_existente = db.query(Usuario).filter(Usuario.email == email).first()
+        
+        if email_existente:
+            return {f"Email já existente. Tente fazer o login!"}
+
+        db.add(novo_usuario)
+        db.commit()
+        db.refresh(novo_usuario)
+        db.close()  
+
+@app.post("/login")
+def login(email: str = Form(...), password: str = Form(...)):
+    db = SessionLocal()
+
+    usuario = db.query(Usuario).filter(Usuario.email == email).first()
+
+    if not usuario:
+        db.close()
+        return{f"Dados errados, ou conta inexistente "}
+    if usuario.password_hash != password:
+        db.close()
+        return {"erro": "Senha incorreta"}
+    else:
+        db.close()
+        return {"mensagem": f"Bem-vindo(a), {usuario.fullname}!"}
