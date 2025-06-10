@@ -3,8 +3,10 @@ from sqlalchemy.orm import Session
 import re
 from database import Base, engine, SessionLocal
 from model import Usuario
+from flask import Flask, render_template, request, redirect, url_for
 
 app = FastAPI()
+appFront = Flask(__name__)
 
 ListErrorEmail = []
 listErrorSenha = []
@@ -86,6 +88,11 @@ def cadastro(fullname: str = Form(...), email: str = Form(...), user: str = Form
         db.refresh(novo_usuario)
         db.close()  
 
+
+@app.route('/index')
+def sucesso():
+    return render_template('index.html')
+
 @app.post("/login")
 def login(email: str = Form(...), password: str = Form(...)):
     db = SessionLocal()
@@ -100,4 +107,5 @@ def login(email: str = Form(...), password: str = Form(...)):
         return {"erro": "Senha incorreta"}
     else:
         db.close()
-        return {"mensagem": f"Bem-vindo(a), {usuario.fullname}!"}
+        sucesso()
+
