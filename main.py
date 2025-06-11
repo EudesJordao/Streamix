@@ -7,15 +7,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Ou use ["http://127.0.0.1:5500"] para mais segurança
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
 ListErrorEmail = []
 listErrorSenha = []
 listErrorName = []
