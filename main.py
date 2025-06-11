@@ -7,6 +7,14 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 ListErrorEmail = []
 listErrorSenha = []
 listErrorName = []
@@ -56,16 +64,16 @@ def cadastro(fullname: str = Form(...), email: str = Form(...), user: str = Form
     validar_email(email)
 
     if listErrorName:
-        mensage = {"mensagem": f"O nome completo está errado: {listErrorName.copy()}"}
+        mensage = f"O nome completo está errado: {listErrorName.copy()}"
         listErrorName.clear()
         listErrorSenha.clear()
         raise HTTPException(status_code=400, detail=mensage)
     elif ListErrorEmail:
-        mensage = {"mensagem": f"O email está errado: {ListErrorEmail.copy()}"}
+        mensage = f"O email está errado: {ListErrorEmail.copy()}"
         ListErrorEmail.clear()
         raise HTTPException(status_code=400, detail=mensage)
     elif listErrorSenha:
-        mensage = {"mensagem": f"A senha está errada: {listErrorSenha.copy()}"}
+        mensage = f"A senha está errada: {listErrorSenha.copy()}"
         listErrorSenha.clear()
         raise HTTPException(status_code=400, detail=mensage)
     else:
