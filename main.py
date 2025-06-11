@@ -9,7 +9,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], 
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -89,7 +89,8 @@ def cadastro(fullname: str = Form(...), email: str = Form(...), user: str = Form
         email_existente = db.query(Usuario).filter(Usuario.email == email).first()
 
         if email_existente:
-            return {f"Email já existente. Tente fazer o login!"}
+            raise HTTPException(status_code=400, detail= f"Email já existente. Tente fazer o login!")
+
 
         db.add(novo_usuario)
         db.commit()
