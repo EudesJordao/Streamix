@@ -3,10 +3,19 @@ from sqlalchemy.orm import Session
 import re
 from database import Base, engine, SessionLocal
 from model import Usuario
-from flask import Flask, render_template, request, redirect, url_for
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
-appFront = Flask(__name__)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Ou use ["http://127.0.0.1:5500"] para mais segurança
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 ListErrorEmail = []
 listErrorSenha = []
@@ -16,10 +25,10 @@ listErrorName = []
 def validar_senha(senha : str):
     if len(senha) < 7:
         listErrorSenha.append("A senha tem menos de 8 digitos!")
-    
+
     if not re.search(r'[A-Z]', senha):
         listErrorSenha.append("A senha não tem letra maiúscula!")
-        
+
 
     if not re.search(r'[!@#$%^&*(),.?":{}|<>_\-]', senha):
         listErrorSenha.append("A senha não tem símbolos!")
@@ -55,7 +64,7 @@ def cadastro(fullname: str = Form(...), email: str = Form(...), user: str = Form
     validar_senha(password)
     validar_nome(fullname)
     validar_email(email)
-    
+
     if listErrorName:
         mensage = {f"O nome completo esta errado: {listErrorName.copy()}"}
         listErrorName.clear()
@@ -70,7 +79,7 @@ def cadastro(fullname: str = Form(...), email: str = Form(...), user: str = Form
         return mensage
     else:
         db = SessionLocal()
-        
+
         novo_usuario = Usuario(
             email = email,
             password_hash = password,
@@ -79,19 +88,15 @@ def cadastro(fullname: str = Form(...), email: str = Form(...), user: str = Form
         )
 
         email_existente = db.query(Usuario).filter(Usuario.email == email).first()
-        
+
         if email_existente:
             return {f"Email já existente. Tente fazer o login!"}
 
         db.add(novo_usuario)
         db.commit()
         db.refresh(novo_usuario)
-        db.close()  
+        db.close()
 
-
-@app.route('/index')
-def sucesso():
-    return render_template('index.html')
 
 @app.post("/login")
 def login(email: str = Form(...), password: str = Form(...)):
@@ -107,5 +112,3 @@ def login(email: str = Form(...), password: str = Form(...)):
         return {"erro": "Senha incorreta"}
     else:
         db.close()
-        sucesso()
-
