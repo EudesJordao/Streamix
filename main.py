@@ -1,5 +1,4 @@
-from fastapi import FastAPI, Form, Depends
-from sqlalchemy.orm import Session
+from fastapi import FastAPI, Form, HTTPException
 import re
 from database import Base, engine, SessionLocal
 from model import Usuario
@@ -66,17 +65,18 @@ def cadastro(fullname: str = Form(...), email: str = Form(...), user: str = Form
     validar_email(email)
 
     if listErrorName:
-        mensage = {f"O nome completo esta errado: {listErrorName.copy()}"}
+        mensage = {"mensagem": f"O nome completo está errado: {listErrorName.copy()}"}
         listErrorName.clear()
-        return mensage
-    elif ListErrorEmail:
-        mensage = {f"A senha esta errada: {ListErrorEmail.copy()}"}
-        ListErrorEmail.clear()
-        return mensage
-    elif listErrorSenha:
-        mensage = {f"A senha esta errada: {listErrorSenha.copy()}"}
         listErrorSenha.clear()
-        return mensage
+        raise HTTPException(status_code=400, detail=mensage)
+    elif ListErrorEmail:
+        mensage = {"mensagem": f"O email está errado: {ListErrorEmail.copy()}"}
+        ListErrorEmail.clear()
+        raise HTTPException(status_code=400, detail=mensage)
+    elif listErrorSenha:
+        mensage = {"mensagem": f"A senha está errada: {listErrorSenha.copy()}"}
+        listErrorSenha.clear()
+        raise HTTPException(status_code=400, detail=mensage)
     else:
         db = SessionLocal()
 
@@ -106,9 +106,9 @@ def login(email: str = Form(...), password: str = Form(...)):
 
     if not usuario:
         db.close()
-        return{f"Dados errados, ou conta inexistente "}
+        raise HTTPException(status_code=404, detail="Usuário não encontrado")
     if usuario.password_hash != password:
         db.close()
-        return {"erro": "Senha incorreta"}
+        raise HTTPException(status_code=401, detail="Senha incorreta")
     else:
         db.close()

@@ -12,6 +12,6 @@
       alert('Cadastro realizado com sucesso! Você pode fazer login agora.');
     } else {
       const errorText = await response.json();
-      alert('Erro ao fazer cadastro: ' + errorText);
+      alert('Erro ao fazer cadastro: ' + errorText.detail.mensagem);
     }
   });

@@ -12,6 +12,6 @@
       alert('Login realizado com sucesso!');
     } else {
       const errorText = await response.json();
-      alert('Erro ao fazer login: ' + errorText);
+      alert('Erro ao fazer login: ' + errorText.detail);
     }
   });
